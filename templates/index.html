@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Churn Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 65%;
+            margin: auto;
+            margin-top: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        select, input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            background: #4facfe;
+            color: white;
+            padding: 12px;
+            width: 50%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: #00c6ff;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Customer Churn Prediction</h1>
+
+    <p>Enter customer details to predict whether the customer will churn or not.</p>
+
+    <!-- 🔥 INPUT EXPLANATION (INTERVIEW GOLD) -->
+    <div class="info-box">
+        <b>Input Features Used:</b><br><br>
+        • Demographics: Gender, Senior Citizen, Partner, Dependents <br>
+        • Account Info: Tenure, Contract Type, Payment Method <br>
+        • Services: Phone, Internet, Multiple Lines <br>
+        • Billing: Monthly Charges, Total Charges <br>
+    </div>
+
+    <form action="/predict" method="post">
+
+        <div class="section-title">👤 Customer Demographics</div>
+
+        <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <select name="SeniorCitizen">
+            <option value="0">Not Senior Citizen</option>
+            <option value="1">Senior Citizen</option>
+        </select>
+
+        <select name="Partner">
+            <option value="Yes">Has Partner</option>
+            <option value="No">No Partner</option>
+        </select>
+
+        <select name="Dependents">
+            <option value="Yes">Has Dependents</option>
+            <option value="No">No Dependents</option>
+        </select>
+
+
+        <div class="section-title">📊 Account Information</div>
+
+        <input type="number" name="tenure" placeholder="Tenure (in months)" required>
+
+        <select name="Contract">
+            <option value="Month-to-month">Month-to-month</option>
+            <option value="One year">One year</option>
+            <option value="Two year">Two year</option>
+        </select>
+
+        <select name="PaymentMethod">
+            <option value="Electronic check">Electronic check</option>
+            <option value="Mailed check">Mailed check</option>
+            <option value="Bank transfer (automatic)">Bank transfer</option>
+            <option value="Credit card (automatic)">Credit card</option>
+        </select>
+
+
+        <div class="section-title">📡 Services</div>
+
+        <select name="PhoneService">
+            <option value="Yes">Phone Service: Yes</option>
+            <option value="No">Phone Service: No</option>
+        </select>
+
+        <select name="MultipleLines">
+            <option value="No">No Multiple Lines</option>
+            <option value="Yes">Has Multiple Lines</option>
+            <option value="No phone service">No phone service</option>
+        </select>
+
+        <select name="InternetService">
+            <option value="DSL">DSL</option>
+            <option value="Fiber optic">Fiber optic</option>
+            <option value="No">No Internet</option>
+        </select>
+
+
+        <div class="section-title">💰 Billing</div>
+
+        <input type="number" step="any" name="MonthlyCharges" placeholder="Monthly Charges" required>
+        <input type="number" step="any" name="TotalCharges" placeholder="Total Charges" required>
+
+
+        <div class="center">
+            <br>
+            <button class="btn" type="submit">Predict Churn</button>
+        </div>
+
+    </form>
+
+    <div class="result">
+        {{ prediction_text }}
+        {% if confidence %}
+<p style="font-size:18px; color:#555;">
+    Confidence of Churn: <b>{{ confidence }}%</b>
+</p>
+{% endif %}
+    </div>
+    
+</div>
+
+</body>
+</html>
